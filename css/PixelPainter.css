@@ -1,0 +1,44 @@
+
+#pixelPainter {
+  display: flex;
+}
+
+#palette {
+  margin: 20px;
+}
+
+.defaults {
+  border: black 1px solid;
+  height: 25px;
+  width: 75px;
+  margin-top: 10px;
+  border-radius: 15%;
+  text-align: center;
+}
+
+#canvas {
+  margin: 20px;
+}
+
+.paletteGridRow {
+  display: flex;
+}
+
+.paletteGridCell {
+  border: black 1px solid;
+  height: 25px;
+  width: 25px;
+  margin: 1px;
+  border-radius: 100%;
+}
+
+.canvasGridRow {
+  display: flex;
+}
+
+.canvasGridCell {
+  border: black 1px solid;
+  height: 10px;
+  width: 10px;
+}
+
