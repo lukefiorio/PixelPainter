@@ -1,37 +1,6 @@
 
 
 
-// function createGridElem(parentId, colNum, rowNum = 0) {
-//   let newElem = document.createElement('div');
-//   parentId.appendChild(newElem);
-//   if (rowNum === 0) {
-//     newElem.id = 'col' + colNum;
-//     newElem.className = parentId.id+'-gridColumn';
-//   }
-//   if (rowNum > 0) {
-//     newElem.id = parentId.id+'col' + colNum + '-row' + rowNum;
-//     newElem.className = 'gridCell';
-//   }
-// }
-
-// function makeGrid(parentId, self, width, height = width) {
-//   let newElem = document.createElement('div');
-//   newElem.id = self;
-//   parentId.appendChild(newElem);
-//   for (let i = 1; i <= height; i++) {
-//     createGridElem(newElem, i);
-//     for (let j = 1; j <= width; j++) {
-//       createGridElem(document.getElementById('col' + i), j, i);
-//     }
-//   }
-// }
-
-// //makeGrid(8, 6);
-// makeGrid(pixelPainter, 'palette', 3, 3);
-// makeGrid(pixelPainter, 'canvas', 8, 6);
-
-
-
 function makeColorPalette(height, width = height) {
 
   // keeping height as parameter in case i want to make a gradient
@@ -40,34 +9,26 @@ function makeColorPalette(height, width = height) {
     let g = 255;
     let b = 255;
 
-    // if (rgbParamNbr === 1) {
-    //   g = Math.floor((255 / height)*(height-1));
-    //   b = Math.floor((255 / height)*(height-1));
-    // }
-
-    // if (rgbParamNbr === 2) {
-    //   r = Math.floor((255 / height)*(height-1));
-    //   b = Math.floor((255 / height)*(height-1));
-    // }
-
-    // if (rgbParamNbr === 3) {
-    //   r = Math.floor((255 / height)*(height-1));
-    //   g = Math.floor((255 / height)*(height-1));
-    // }
-
+    // commented code would make a gradient
     if (rgbParamNbr === 1) {
       g = Math.floor(Math.random() * 256);
       b = Math.floor(Math.random() * 256);
+      //   g = Math.floor((255 / height)*(height-1));
+      //   b = Math.floor((255 / height)*(height-1));
     }
 
     if (rgbParamNbr === 2) {
       r = Math.floor(Math.random() * 256);
       b = Math.floor(Math.random() * 256);
+      //   r = Math.floor((255 / height)*(height-1));
+      //   b = Math.floor((255 / height)*(height-1));
     }
 
     if (rgbParamNbr === 3) {
       r = Math.floor(Math.random() * 256);
       g = Math.floor(Math.random() * 256);
+      //   r = Math.floor((255 / height)*(height-1));
+      //   g = Math.floor((255 / height)*(height-1));
     }
 
     let strRGB = "rgb(" + r + ", " + g + ", " + b + ")";
@@ -75,9 +36,12 @@ function makeColorPalette(height, width = height) {
     return strRGB;
   }
 
+  const paletteBox = document.createElement('div');
+  paletteBox.id = 'paletteArea';
+  pixelPainter.appendChild(paletteBox);
   const newElem = document.createElement('div');
   newElem.id = 'palette';
-  pixelPainter.appendChild(newElem);
+  paletteBox.appendChild(newElem);
   for (let i = 1; i <= height; i++) {
     let newCol = document.createElement('div');
     newCol.id = 'row' + i;
@@ -93,70 +57,72 @@ function makeColorPalette(height, width = height) {
 
     }
   }
-
 }
 
 function addDefaults() {
-    // black box
-    const black = document.createElement('div');
-    black.id = 'blacks';
-    black.className = 'defaults';
-    palette.appendChild(black);
-    black.style.backgroundColor = "rgb(200, 200, 200)";
-    // black's children
-    const blackIcon = document.createElement('img');
-    const blackText = document.createElement('span');
-    blackIcon.id = 'blackImg';
-    blackText.id = 'blackTxt';
-    blackIcon.src = 'https://img.pngio.com/black-circlepng-circle-png-600_600.png';
-    blackText.innerHTML = "Black"
-    black.appendChild(blackIcon);
-    black.appendChild(blackText);
-  
-    // eraser box
-    const eraser = document.createElement('div');
-    eraser.id = 'erasers';
-    eraser.className = 'defaults';
-    palette.appendChild(eraser);
-    // eraser's children
-    const eraserIcon = document.createElement('img');
-    const eraserText = document.createElement('span');
-    eraserIcon.id = 'eraserImg';
-    eraserText.id = 'eraserTxt';
-    eraserText.innerHTML = "Eraser";
-    eraserIcon.src = 'https://lh4.ggpht.com/lcydxe9aTLvDT5flQ4PldQQswbnrC0tR4IIpTQjPr5PI2fSSvHhlc3ENf2B6DyGZOIY';
-    eraser.appendChild(eraserIcon);
-    eraser.appendChild(eraserText);
-  
-    // fill box
-    const fill = document.createElement('div');
-    fill.id = 'fills';
-    fill.className = 'defaults';
-    palette.appendChild(fill);
-    // fill's children
-    const fillIcon = document.createElement('img');
-    const fillText = document.createElement('span');
-    fillIcon.id = 'fillImg';
-    fillText.id = 'fillTxt';
-    fillText.innerHTML = "Fill";
-    fillIcon.src = 'https://cdn4.iconfinder.com/data/icons/design-tools-outline-icons-set/144/Paint_Bucket-512.png';
-    fill.appendChild(fillIcon);
-    fill.appendChild(fillText);
-  
-    // clearAll box
-    const clearAll = document.createElement('div');
-    clearAll.id = 'clearAlls';
-    clearAll.className = 'defaults';
-    palette.appendChild(clearAll);
-    // clearAll's children
-    const clearAllIcon = document.createElement('img');
-    const clearAllText = document.createElement('span');
-    clearAllIcon.id = 'clearAllImg';
-    clearAllText.id = 'clearAllTxt';
-    clearAllText.innerHTML = "WIPE";
-    clearAllIcon.src = 'https://sustainingourworld.com/wp-content/uploads/2013/07/bleach-bottle.png';
-    clearAll.appendChild(clearAllIcon);
-    clearAll.appendChild(clearAllText);
+  const defaultBox = document.createElement('div');
+  defaultBox.id = 'defaultArea';
+  palette.appendChild(defaultBox);
+  // black box
+  const black = document.createElement('div');
+  black.id = 'blacks';
+  black.className = 'defaults';
+  defaultBox.appendChild(black);
+  black.style.backgroundColor = "rgb(200, 200, 200)";
+  // black's children
+  const blackIcon = document.createElement('img');
+  const blackText = document.createElement('span');
+  blackIcon.id = 'blackImg';
+  blackText.id = 'blackTxt';
+  blackIcon.src = 'https://img.pngio.com/black-circlepng-circle-png-600_600.png';
+  blackText.innerHTML = "Black"
+  black.appendChild(blackIcon);
+  black.appendChild(blackText);
+
+  // eraser box
+  const eraser = document.createElement('div');
+  eraser.id = 'erasers';
+  eraser.className = 'defaults';
+  defaultBox.appendChild(eraser);
+  // eraser's children
+  const eraserIcon = document.createElement('img');
+  const eraserText = document.createElement('span');
+  eraserIcon.id = 'eraserImg';
+  eraserText.id = 'eraserTxt';
+  eraserText.innerHTML = "Eraser";
+  eraserIcon.src = 'https://lh4.ggpht.com/lcydxe9aTLvDT5flQ4PldQQswbnrC0tR4IIpTQjPr5PI2fSSvHhlc3ENf2B6DyGZOIY';
+  eraser.appendChild(eraserIcon);
+  eraser.appendChild(eraserText);
+
+  // fill box
+  const fill = document.createElement('div');
+  fill.id = 'fills';
+  fill.className = 'defaults';
+  defaultBox.appendChild(fill);
+  // fill's children
+  const fillIcon = document.createElement('img');
+  const fillText = document.createElement('span');
+  fillIcon.id = 'fillImg';
+  fillText.id = 'fillTxt';
+  fillText.innerHTML = "Fill";
+  fillIcon.src = 'https://cdn4.iconfinder.com/data/icons/design-tools-outline-icons-set/144/Paint_Bucket-512.png';
+  fill.appendChild(fillIcon);
+  fill.appendChild(fillText);
+
+  // clearAll box
+  const clearAll = document.createElement('div');
+  clearAll.id = 'clearAlls';
+  clearAll.className = 'defaults';
+  defaultBox.appendChild(clearAll);
+  // clearAll's children
+  const clearAllIcon = document.createElement('img');
+  const clearAllText = document.createElement('span');
+  clearAllIcon.id = 'clearAllImg';
+  clearAllText.id = 'clearAllTxt';
+  clearAllText.innerHTML = "WIPE";
+  clearAllIcon.src = 'https://sustainingourworld.com/wp-content/uploads/2013/07/bleach-bottle.png';
+  clearAll.appendChild(clearAllIcon);
+  clearAll.appendChild(clearAllText);
 
 }
 
@@ -198,12 +164,12 @@ let paletteClass = document.getElementsByClassName('paletteGridCell');
 let canvasClass = document.getElementsByClassName('canvasGridCell');
 
 function wipeCanvas() {
-  for (let i =0;i<canvasClass.length;i++) {
+  for (let i = 0; i < canvasClass.length; i++) {
     canvasClass[i].style.backgroundColor = "rgb(255, 255, 255)";
   }
 }
 
-clearAlls.addEventListener('click',wipeCanvas);
+clearAlls.addEventListener('click', wipeCanvas);
 
 let storedColor = "rgb(0, 0, 0)";
 
@@ -287,11 +253,11 @@ function fillShape() {
   let keepFilling = 1;
 
   while (keepFilling === 1 && colInc <= width) {
-    
+
     while (keepFilling === 1 && rowInc <= height) {
 
       let elemToFill = document.getElementById('canvas-row' + rowInc + '-col' + colInc);
-  
+
       if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
       if (elemToFill.style.backgroundColor === "rgb(255, 255, 255)") {
         elemToFill.style.backgroundColor = storedColor;
@@ -301,7 +267,7 @@ function fillShape() {
     rowInc = rowNum;
     keepFilling = 1;
     if (colInc < width) colInc++;
-    
+
     elemToFill = document.getElementById('canvas-row' + rowInc + '-col' + colInc);
     if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
   }
@@ -309,7 +275,7 @@ function fillShape() {
   // down & left
   // loop through rows, for each column
   rowInc = rowNum;
-  colInc = colNum-1;
+  colInc = colNum - 1;
   keepFilling = 1;
 
   while (keepFilling === 1 && colInc > 0) {
@@ -330,8 +296,8 @@ function fillShape() {
   }
 
   // up & left
-  rowInc = rowNum-1;
-  colInc = colNum-1;
+  rowInc = rowNum - 1;
+  colInc = colNum - 1;
   keepFilling = 1;
 
   while (keepFilling === 1 && colInc > 0) {
@@ -343,7 +309,7 @@ function fillShape() {
         rowInc--;
       }
     }
-    rowInc = rowNum-1;
+    rowInc = rowNum - 1;
     keepFilling = 1;
     if (colInc > 1) colInc--;
 
@@ -351,27 +317,27 @@ function fillShape() {
     if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
   }
 
-    // up & right
-    rowInc = rowNum-1;
-    colInc = colNum;
-    keepFilling = 1;
-  
-    while (keepFilling === 1 && colInc <= width) {
-      while (keepFilling === 1 && rowInc > 0) {
-        let elemToFill = document.getElementById('canvas-row' + rowInc + '-col' + colInc);
-        if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
-        if (elemToFill.style.backgroundColor === "rgb(255, 255, 255)") {
-          elemToFill.style.backgroundColor = storedColor;
-          rowInc--;
-        }
-      }
-      rowInc = rowNum-1;
-      keepFilling = 1;
-      if (colInc < width) colInc++;
-  
-      elemToFill = document.getElementById('canvas-row' + rowInc + '-col' + colInc);
+  // up & right
+  rowInc = rowNum - 1;
+  colInc = colNum;
+  keepFilling = 1;
+
+  while (keepFilling === 1 && colInc <= width) {
+    while (keepFilling === 1 && rowInc > 0) {
+      let elemToFill = document.getElementById('canvas-row' + rowInc + '-col' + colInc);
       if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
+      if (elemToFill.style.backgroundColor === "rgb(255, 255, 255)") {
+        elemToFill.style.backgroundColor = storedColor;
+        rowInc--;
+      }
     }
+    rowInc = rowNum - 1;
+    keepFilling = 1;
+    if (colInc < width) colInc++;
+
+    elemToFill = document.getElementById('canvas-row' + rowInc + '-col' + colInc);
+    if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
+  }
 
 }
 
@@ -413,8 +379,8 @@ function toggleFill() {
       storedColor = "rgb(0, 0, 0)";
       blacks.style.backgroundColor = "rgb(200, 200, 200)";
     }
-    
+
   }
 }
 
-fills.addEventListener('click',toggleFill);
+fills.addEventListener('click', toggleFill);
