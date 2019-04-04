@@ -243,26 +243,17 @@ document.body.addEventListener('mouseup', mouseupColor);
 
 function fillShape() {
   if (!filler) return;
+  if (this.style.backgroundColor !== "rgb(255, 255, 255)") return;
 
   const height = document.getElementsByClassName('canvasGridRow').length;
   const width = canvasClass.length / height;
-
-  // let rowStartIndex = this.id.indexOf('row') + 3;
-  // let rowEndIndex = this.id.indexOf("-", rowStartIndex);
-  // let rowNum = Number(this.id.substring(rowStartIndex, rowEndIndex));
-
-  // let colStartIndex = this.id.indexOf('col') + 3;
-  // let colEndIndex = this.id.length;
-  // let colNum = Number(this.id.substring(colStartIndex, colEndIndex));
-
   const rowNum = this.dataset.row;
   const colNum = this.dataset.col;
 
-
-  // go down & right
+  // down & right
+  // loop through rows, for each column
   let rowInc = rowNum;
   let colInc = colNum;
-
   let keepFilling = 1;
 
   while (keepFilling === 1 && colInc <= width) {
@@ -285,10 +276,36 @@ function fillShape() {
     if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
   }
 
-  // go up & left
+  // down & left
+  // loop through rows, for each column
   rowInc = rowNum;
-  colInc = colNum;
+  colInc = colNum-1;
+  keepFilling = 1;
 
+  while (keepFilling === 1 && colInc > 0) {
+    
+    while (keepFilling === 1 && rowInc <= height) {
+
+      let elemToFill = document.getElementById('canvas-row' + rowInc + '-col' + colInc);
+  
+      if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
+      if (elemToFill.style.backgroundColor === "rgb(255, 255, 255)") {
+        elemToFill.style.backgroundColor = storedColor;
+        rowInc++;
+      }
+      
+    }
+    rowInc = rowNum;
+    keepFilling = 1;
+    if (colInc > 1) colInc--;
+
+    elemToFill = document.getElementById('canvas-row' + rowInc + '-col' + colInc);
+    if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
+  }
+
+  // go up & left
+  rowInc = rowNum-1;
+  colInc = colNum-1;
   keepFilling = 1;
 
   while (keepFilling === 1 && colInc > 0) {
@@ -304,13 +321,39 @@ function fillShape() {
       }
       
     }
-    rowInc = rowNum;
+    rowInc = rowNum-1;
     keepFilling = 1;
     if (colInc > 1) colInc--;
 
     elemToFill = document.getElementById('canvas-row' + rowInc + '-col' + colInc);
     if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
   }
+
+    // go up & right
+    rowInc = rowNum-1;
+    colInc = colNum;
+    keepFilling = 1;
+  
+    while (keepFilling === 1 && colInc <= width) {
+      
+      while (keepFilling === 1 && rowInc > 0) {
+  
+        let elemToFill = document.getElementById('canvas-row' + rowInc + '-col' + colInc);
+    
+        if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
+        if (elemToFill.style.backgroundColor === "rgb(255, 255, 255)") {
+          elemToFill.style.backgroundColor = storedColor;
+          rowInc--;
+        }
+        
+      }
+      rowInc = rowNum-1;
+      keepFilling = 1;
+      if (colInc < width) colInc++;
+  
+      elemToFill = document.getElementById('canvas-row' + rowInc + '-col' + colInc);
+      if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
+    }
 
 }
 
