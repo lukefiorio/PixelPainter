@@ -1,4 +1,14 @@
 
+body {
+  background-image: url('');
+}
+
+h1 {
+  font-family: 'Fredericka the Great', cursive;
+  font-size: 8vw;
+  margin: 25px;
+}
+
 #pixelPainter {
   display: flex;
 }
@@ -44,6 +54,17 @@
 }
 
 #fillImg {
+  height: 25px;
+  width: 25px;
+  margin-right: 5px;
+}
+
+#clearAlls {
+  display: flex;
+  align-items: center;
+}
+
+#clearAllImg {
   height: 25px;
   width: 25px;
   margin-right: 5px;

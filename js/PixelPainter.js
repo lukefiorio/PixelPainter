@@ -93,42 +93,46 @@ function makeColorPalette(height, width = height) {
 
     }
   }
-  // black box
-  const black = document.createElement('div');
-  black.id = 'blacks';
-  black.className = 'defaults';
-  newElem.appendChild(black);
-  black.style.backgroundColor = "rgb(200, 200, 200)";
-  // black's children
-  const blackIcon = document.createElement('img');
-  const blackText = document.createElement('span');
-  blackIcon.id = 'blackImg';
-  blackText.id = 'blackTxt';
-  blackIcon.src = 'https://img.pngio.com/black-circlepng-circle-png-600_600.png';
-  blackText.innerHTML = "Black"
-  black.appendChild(blackIcon);
-  black.appendChild(blackText);
 
-  // eraser box
-  const eraser = document.createElement('div');
-  eraser.id = 'erasers';
-  eraser.className = 'defaults';
-  newElem.appendChild(eraser);
-  // eraser's children
-  const eraserIcon = document.createElement('img');
-  const eraserText = document.createElement('span');
-  eraserIcon.id = 'eraserImg';
-  eraserText.id = 'eraserTxt';
-  eraserText.innerHTML = "Eraser";
-  eraserIcon.src = 'https://lh4.ggpht.com/lcydxe9aTLvDT5flQ4PldQQswbnrC0tR4IIpTQjPr5PI2fSSvHhlc3ENf2B6DyGZOIY';
-  eraser.appendChild(eraserIcon);
-  eraser.appendChild(eraserText);
+}
 
+function addDefaults() {
+    // black box
+    const black = document.createElement('div');
+    black.id = 'blacks';
+    black.className = 'defaults';
+    palette.appendChild(black);
+    black.style.backgroundColor = "rgb(200, 200, 200)";
+    // black's children
+    const blackIcon = document.createElement('img');
+    const blackText = document.createElement('span');
+    blackIcon.id = 'blackImg';
+    blackText.id = 'blackTxt';
+    blackIcon.src = 'https://img.pngio.com/black-circlepng-circle-png-600_600.png';
+    blackText.innerHTML = "Black"
+    black.appendChild(blackIcon);
+    black.appendChild(blackText);
+  
+    // eraser box
+    const eraser = document.createElement('div');
+    eraser.id = 'erasers';
+    eraser.className = 'defaults';
+    palette.appendChild(eraser);
+    // eraser's children
+    const eraserIcon = document.createElement('img');
+    const eraserText = document.createElement('span');
+    eraserIcon.id = 'eraserImg';
+    eraserText.id = 'eraserTxt';
+    eraserText.innerHTML = "Eraser";
+    eraserIcon.src = 'https://lh4.ggpht.com/lcydxe9aTLvDT5flQ4PldQQswbnrC0tR4IIpTQjPr5PI2fSSvHhlc3ENf2B6DyGZOIY';
+    eraser.appendChild(eraserIcon);
+    eraser.appendChild(eraserText);
+  
     // fill box
     const fill = document.createElement('div');
     fill.id = 'fills';
     fill.className = 'defaults';
-    newElem.appendChild(fill);
+    palette.appendChild(fill);
     // fill's children
     const fillIcon = document.createElement('img');
     const fillText = document.createElement('span');
@@ -138,8 +142,23 @@ function makeColorPalette(height, width = height) {
     fillIcon.src = 'https://cdn4.iconfinder.com/data/icons/design-tools-outline-icons-set/144/Paint_Bucket-512.png';
     fill.appendChild(fillIcon);
     fill.appendChild(fillText);
-}
+  
+    // clearAll box
+    const clearAll = document.createElement('div');
+    clearAll.id = 'clearAlls';
+    clearAll.className = 'defaults';
+    palette.appendChild(clearAll);
+    // clearAll's children
+    const clearAllIcon = document.createElement('img');
+    const clearAllText = document.createElement('span');
+    clearAllIcon.id = 'clearAllImg';
+    clearAllText.id = 'clearAllTxt';
+    clearAllText.innerHTML = "WIPE";
+    clearAllIcon.src = 'https://sustainingourworld.com/wp-content/uploads/2013/07/bleach-bottle.png';
+    clearAll.appendChild(clearAllIcon);
+    clearAll.appendChild(clearAllText);
 
+}
 
 
 // const paletteElem = document.getElementById('palette');
@@ -169,11 +188,22 @@ function makeCanvas(height, width = height) {
   }
 }
 
+// invoke to create palette, settings, and canvas
 makeColorPalette(5, 3);
 makeCanvas(25, 25);
+addDefaults();
+
 
 let paletteClass = document.getElementsByClassName('paletteGridCell');
 let canvasClass = document.getElementsByClassName('canvasGridCell');
+
+function wipeCanvas() {
+  for (let i =0;i<canvasClass.length;i++) {
+    canvasClass[i].style.backgroundColor = "rgb(255, 255, 255)";
+  }
+}
+
+clearAlls.addEventListener('click',wipeCanvas);
 
 let storedColor = "rgb(0, 0, 0)";
 
@@ -283,17 +313,13 @@ function fillShape() {
   keepFilling = 1;
 
   while (keepFilling === 1 && colInc > 0) {
-    
     while (keepFilling === 1 && rowInc <= height) {
-
       let elemToFill = document.getElementById('canvas-row' + rowInc + '-col' + colInc);
-  
       if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
       if (elemToFill.style.backgroundColor === "rgb(255, 255, 255)") {
         elemToFill.style.backgroundColor = storedColor;
         rowInc++;
       }
-      
     }
     rowInc = rowNum;
     keepFilling = 1;
@@ -303,23 +329,19 @@ function fillShape() {
     if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
   }
 
-  // go up & left
+  // up & left
   rowInc = rowNum-1;
   colInc = colNum-1;
   keepFilling = 1;
 
   while (keepFilling === 1 && colInc > 0) {
-    
     while (keepFilling === 1 && rowInc > 0) {
-
       let elemToFill = document.getElementById('canvas-row' + rowInc + '-col' + colInc);
-  
       if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
       if (elemToFill.style.backgroundColor === "rgb(255, 255, 255)") {
         elemToFill.style.backgroundColor = storedColor;
         rowInc--;
       }
-      
     }
     rowInc = rowNum-1;
     keepFilling = 1;
@@ -329,23 +351,19 @@ function fillShape() {
     if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
   }
 
-    // go up & right
+    // up & right
     rowInc = rowNum-1;
     colInc = colNum;
     keepFilling = 1;
   
     while (keepFilling === 1 && colInc <= width) {
-      
       while (keepFilling === 1 && rowInc > 0) {
-  
         let elemToFill = document.getElementById('canvas-row' + rowInc + '-col' + colInc);
-    
         if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
         if (elemToFill.style.backgroundColor === "rgb(255, 255, 255)") {
           elemToFill.style.backgroundColor = storedColor;
           rowInc--;
         }
-        
       }
       rowInc = rowNum-1;
       keepFilling = 1;
