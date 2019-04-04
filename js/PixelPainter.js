@@ -255,40 +255,63 @@ function fillShape() {
   // let colEndIndex = this.id.length;
   // let colNum = Number(this.id.substring(colStartIndex, colEndIndex));
 
-  let rowNum = this.dataset.row;
-  let colNum = this.dataset.col;
+  const rowNum = this.dataset.row;
+  const colNum = this.dataset.col;
 
+
+  // go down & right
+  let rowInc = rowNum;
+  let colInc = colNum;
 
   let keepFilling = 1;
 
-  while (keepFilling === 1 && rowNum <= height) {
+  while (keepFilling === 1 && colInc <= width) {
+    
+    while (keepFilling === 1 && rowInc <= height) {
 
-    let elemToFill = document.getElementById('canvas-row' + rowNum + '-col' + colNum);
-
+      let elemToFill = document.getElementById('canvas-row' + rowInc + '-col' + colInc);
+  
+      if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
+      if (elemToFill.style.backgroundColor === "rgb(255, 255, 255)") {
+        elemToFill.style.backgroundColor = storedColor;
+        rowInc++;
+      }
+    }
+    rowInc = rowNum;
+    keepFilling = 1;
+    if (colInc < width) colInc++;
+    
+    elemToFill = document.getElementById('canvas-row' + rowInc + '-col' + colInc);
     if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
-    if (elemToFill.style.backgroundColor === "rgb(255, 255, 255)") elemToFill.style.backgroundColor = storedColor;
-    rowNum++
   }
 
+  // go up & left
+  rowInc = rowNum;
+  colInc = colNum;
 
-  // for (let i = colNum; i <= width; i++) {
-  //   for (let j = rowNum; j <= height; j++) {
+  keepFilling = 1;
 
-  //     let elemToFill = document.getElementById('canvas-row' + j + '-col' + i);
-  //     while (keepFilling === 1) {
-  //       elemToFill.style.backgroundColor = storedColor;
-  //     }
-  //   }
-  //   // if (nextElemToFill.style.backgroundColor !== "rgb(255, 255, 255)") {
-  //   //   keepFilling = 0;
-  //   // }
-  // }
+  while (keepFilling === 1 && colInc > 0) {
+    
+    while (keepFilling === 1 && rowInc > 0) {
 
+      let elemToFill = document.getElementById('canvas-row' + rowInc + '-col' + colInc);
+  
+      if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
+      if (elemToFill.style.backgroundColor === "rgb(255, 255, 255)") {
+        elemToFill.style.backgroundColor = storedColor;
+        rowInc--;
+      }
+      
+    }
+    rowInc = rowNum;
+    keepFilling = 1;
+    if (colInc > 1) colInc--;
 
+    elemToFill = document.getElementById('canvas-row' + rowInc + '-col' + colInc);
+    if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
+  }
 
-  // if (this.style.backgroundColor === "rgb(255, 255, 255)") {
-  //   this.style.backgroundColor = storedColor;
-  // }
 }
 
 for (let i = 0; i < canvasClass.length; i++) {
