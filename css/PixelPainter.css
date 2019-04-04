@@ -16,6 +16,39 @@
   text-align: center;
 }
 
+#blacks {
+  display: flex;
+  align-items: center;
+}
+
+#blackImg {
+  height: 25px;
+  width: 25px;
+  margin-right: 5px;
+}
+
+#erasers {
+  display: flex;
+  align-items: center;
+}
+
+#eraserImg {
+  height: 25px;
+  width: 25px;
+  margin-right: 5px;
+}
+
+#fills {
+  display: flex;
+  align-items: center;
+}
+
+#fillImg {
+  height: 25px;
+  width: 25px;
+  margin-right: 5px;
+}
+
 #canvas {
   margin: 20px;
 }
@@ -28,7 +61,9 @@
   border: black 1px solid;
   height: 25px;
   width: 25px;
-  margin: 1px;
+  margin: 2px;
+  margin-bottom: 4px;
+  padding: 0px;
   border-radius: 100%;
 }
 
@@ -37,8 +72,8 @@
 }
 
 .canvasGridCell {
-  border: black 1px solid;
-  height: 10px;
-  width: 10px;
+  border: black 1px dotted;
+  height: 15px;
+  width: 15px;
 }
 

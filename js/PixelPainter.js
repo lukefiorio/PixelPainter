@@ -56,22 +56,22 @@ function makeColorPalette(height, width = height) {
     // }
 
     if (rgbParamNbr === 1) {
-      g = Math.floor(Math.random()*256);
-      b = Math.floor(Math.random()*256);
+      g = Math.floor(Math.random() * 256);
+      b = Math.floor(Math.random() * 256);
     }
 
     if (rgbParamNbr === 2) {
-      r = Math.floor(Math.random()*256);
-      b = Math.floor(Math.random()*256);
+      r = Math.floor(Math.random() * 256);
+      b = Math.floor(Math.random() * 256);
     }
 
     if (rgbParamNbr === 3) {
-      r = Math.floor(Math.random()*256);
-      g = Math.floor(Math.random()*256);
+      r = Math.floor(Math.random() * 256);
+      g = Math.floor(Math.random() * 256);
     }
 
-    let strRGB = "rgb("+r+", "+g+", "+b+")";
-    
+    let strRGB = "rgb(" + r + ", " + g + ", " + b + ")";
+
     return strRGB;
   }
 
@@ -88,19 +88,56 @@ function makeColorPalette(height, width = height) {
       newCell.id = 'palette-row' + i + '-col' + j;
       newCell.className = 'paletteGridCell';
       newCol.appendChild(newCell);
-      newCell.style.backgroundColor = colorStyle((j%3) + 1,i);
-      
+      newCell.style.backgroundColor = colorStyle((j % 3) + 1, i);
+      newCell.style.border = "3px solid " + newCell.style.backgroundColor;
+
     }
   }
+  // black box
   const black = document.createElement('div');
-  const eraser = document.createElement('div');
+  black.id = 'blacks';
   black.className = 'defaults';
-  eraser.className = 'defaults';
   newElem.appendChild(black);
-  newElem.appendChild(eraser);
-  black.innerHTML = "Default"
-  eraser.innerHTML = "Eraser";
+  black.style.backgroundColor = "rgb(200, 200, 200)";
+  // black's children
+  const blackIcon = document.createElement('img');
+  const blackText = document.createElement('span');
+  blackIcon.id = 'blackImg';
+  blackText.id = 'blackTxt';
+  blackIcon.src = 'https://img.pngio.com/black-circlepng-circle-png-600_600.png';
+  blackText.innerHTML = "Black"
+  black.appendChild(blackIcon);
+  black.appendChild(blackText);
 
+  // eraser box
+  const eraser = document.createElement('div');
+  eraser.id = 'erasers';
+  eraser.className = 'defaults';
+  newElem.appendChild(eraser);
+  // eraser's children
+  const eraserIcon = document.createElement('img');
+  const eraserText = document.createElement('span');
+  eraserIcon.id = 'eraserImg';
+  eraserText.id = 'eraserTxt';
+  eraserText.innerHTML = "Eraser";
+  eraserIcon.src = 'https://lh4.ggpht.com/lcydxe9aTLvDT5flQ4PldQQswbnrC0tR4IIpTQjPr5PI2fSSvHhlc3ENf2B6DyGZOIY';
+  eraser.appendChild(eraserIcon);
+  eraser.appendChild(eraserText);
+
+    // fill box
+    const fill = document.createElement('div');
+    fill.id = 'fills';
+    fill.className = 'defaults';
+    newElem.appendChild(fill);
+    // fill's children
+    const fillIcon = document.createElement('img');
+    const fillText = document.createElement('span');
+    fillIcon.id = 'fillImg';
+    fillText.id = 'fillTxt';
+    fillText.innerHTML = "Fill";
+    fillIcon.src = 'https://cdn4.iconfinder.com/data/icons/design-tools-outline-icons-set/144/Paint_Bucket-512.png';
+    fill.appendChild(fillIcon);
+    fill.appendChild(fillText);
 }
 
 
@@ -111,7 +148,7 @@ function makeColorPalette(height, width = height) {
 // document.paletteElem.appendChild(eraser);
 
 function makeCanvas(height, width = height) {
-  
+
   const newElem = document.createElement('div');
   newElem.id = 'canvas';
   pixelPainter.appendChild(newElem);
@@ -124,6 +161,9 @@ function makeCanvas(height, width = height) {
       let newCell = document.createElement('div');
       newCell.id = 'canvas-row' + i + '-col' + j;
       newCell.className = 'canvasGridCell';
+      newCell.style.backgroundColor = "rgb(255, 255, 255)";
+      newCell.dataset.row = i;
+      newCell.dataset.col = j;
       newCol.appendChild(newCell);
     }
   }
@@ -136,8 +176,40 @@ let paletteClass = document.getElementsByClassName('paletteGridCell');
 let canvasClass = document.getElementsByClassName('canvasGridCell');
 
 let storedColor = "rgb(0, 0, 0)";
+
+function setBlack() {
+  storedColor = "rgb(0, 0, 0)";
+  for (let i = 0; i < paletteClass.length; i++) {
+    paletteClass[i].style.border = "3px solid " + paletteClass[i].style.backgroundColor;
+  }
+  blacks.style.backgroundColor = "rgb(200, 200, 200)";
+  erasers.style.backgroundColor = "rgb(255, 255, 255)";
+}
+
+function setWhite() {
+  storedColor = "rgb(255, 255, 255)";
+  for (let i = 0; i < paletteClass.length; i++) {
+    paletteClass[i].style.border = "3px solid " + paletteClass[i].style.backgroundColor;
+  }
+  blacks.style.backgroundColor = "rgb(255, 255, 255)";
+  erasers.style.backgroundColor = "rgb(200, 200, 200)";
+  fills.style.backgroundColor = "rgb(255, 255, 255)";
+}
+
+blacks.addEventListener('click', setBlack);
+erasers.addEventListener('click', setWhite);
+
 function setColor() {
   storedColor = this.style.backgroundColor;
+  for (let i = 0; i < paletteClass.length; i++) {
+    paletteClass[i].style.border = "3px solid " + paletteClass[i].style.backgroundColor;
+  }
+  //let rgb = storedColor.substring(4, storedColor.length-1).replace(/ /g, '').split(',');
+  //let offsetColor = "rgb("+(255-rgb[0])+", "+(255-rgb[1])+", "+(255-rgb[2])+")";
+  this.style.border = "3px solid black";
+  blacks.style.backgroundColor = "rgb(255, 255, 255)";
+  erasers.style.backgroundColor = "rgb(255, 255, 255)";
+  if (filler) fills.style.backgroundColor = storedColor;
 }
 
 for (let i = 0; i < paletteClass.length; i++) {
@@ -147,26 +219,118 @@ for (let i = 0; i < paletteClass.length; i++) {
 let allowDrag = false;
 
 function mousedownColor() {
+  if (filler) return;
   allowDrag = true;
   this.style.backgroundColor = storedColor;
+}
+for (let i = 0; i < canvasClass.length; i++) {
+  canvasClass[i].addEventListener('mousedown', mousedownColor);
 }
 
 function mouseoverColor() {
   if (allowDrag) this.style.backgroundColor = storedColor;
+}
+for (let i = 0; i < canvasClass.length; i++) {
+  canvasClass[i].addEventListener('mouseover', mouseoverColor);
 }
 
 function mouseupColor() {
   allowDrag = false;
 }
 
-for (let i = 0; i < canvasClass.length; i++) {
-  canvasClass[i].addEventListener('mousedown', mousedownColor);
+document.body.addEventListener('mouseup', mouseupColor);
+
+
+function fillShape() {
+  if (!filler) return;
+
+  const height = document.getElementsByClassName('canvasGridRow').length;
+  const width = canvasClass.length / height;
+
+  // let rowStartIndex = this.id.indexOf('row') + 3;
+  // let rowEndIndex = this.id.indexOf("-", rowStartIndex);
+  // let rowNum = Number(this.id.substring(rowStartIndex, rowEndIndex));
+
+  // let colStartIndex = this.id.indexOf('col') + 3;
+  // let colEndIndex = this.id.length;
+  // let colNum = Number(this.id.substring(colStartIndex, colEndIndex));
+
+  let rowNum = this.dataset.row;
+  let colNum = this.dataset.col;
+
+
+  let keepFilling = 1;
+
+  while (keepFilling === 1 && rowNum <= height) {
+
+    let elemToFill = document.getElementById('canvas-row' + rowNum + '-col' + colNum);
+
+    if (elemToFill.style.backgroundColor !== "rgb(255, 255, 255)") keepFilling = 0;
+    if (elemToFill.style.backgroundColor === "rgb(255, 255, 255)") elemToFill.style.backgroundColor = storedColor;
+    rowNum++
+  }
+
+
+  // for (let i = colNum; i <= width; i++) {
+  //   for (let j = rowNum; j <= height; j++) {
+
+  //     let elemToFill = document.getElementById('canvas-row' + j + '-col' + i);
+  //     while (keepFilling === 1) {
+  //       elemToFill.style.backgroundColor = storedColor;
+  //     }
+  //   }
+  //   // if (nextElemToFill.style.backgroundColor !== "rgb(255, 255, 255)") {
+  //   //   keepFilling = 0;
+  //   // }
+  // }
+
+
+
+  // if (this.style.backgroundColor === "rgb(255, 255, 255)") {
+  //   this.style.backgroundColor = storedColor;
+  // }
 }
 
 for (let i = 0; i < canvasClass.length; i++) {
-  canvasClass[i].addEventListener('mouseover', mouseoverColor);
+  canvasClass[i].addEventListener('click', fillShape);
 }
 
-for (let i = 0; i < canvasClass.length; i++) {
-  canvasClass[i].addEventListener('mouseup', mouseupColor);
+let filler = false;
+
+function toggleFill() {
+  filler = !filler;
+
+  if (filler) {
+    // eraser
+    if (storedColor === "rgb(255, 255, 255)") {
+      fills.style.backgroundColor = "rgb(200, 200, 200)";
+      storedColor = "rgb"
+      blacks.style.backgroundColor = "rgb(200, 200, 200)";
+      erasers.style.backgroundColor = "rgb(255, 255, 255)";
+    }
+    // black
+    if (storedColor === "rgb(0, 0, 0)") {
+      fills.style.backgroundColor = "rgb(200, 200, 200)";
+      storedColor = "rgb(0, 0, 0)";
+      blacks.style.backgroundColor = "rgb(200, 200, 200)";
+    }
+    // something from palette
+    if (storedColor !== "rgb(255, 255, 255)" && storedColor !== "rgb(0, 0, 0)") {
+      fills.style.backgroundColor = storedColor;
+    }
+  }
+  if (!filler) {
+    if (storedColor !== "rgb(0, 0, 0)") {
+      fills.style.backgroundColor = "rgb(255, 255, 255)";
+    }
+
+    if (storedColor === "rgb(0, 0, 0)") {
+      fills.style.backgroundColor = "rgb(255, 255, 255)";
+      storedColor = "rgb(0, 0, 0)";
+      blacks.style.backgroundColor = "rgb(200, 200, 200)";
+    }
+    
+  }
 }
+
+fills.addEventListener('click',toggleFill);
