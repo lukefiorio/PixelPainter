@@ -1,0 +1,209 @@
+
+body {
+  background-image: url('https://i.pinimg.com/originals/e8/b3/27/e8b32770adfe18842eef3b1cf0f9d44b.jpg');
+  background-size: 100%;
+}
+
+h1 {
+  font-family: 'Fredericka the Great', cursive;
+  font-size: 8vw;
+  color: lightblue;
+  margin: 25px;
+}
+
+#pixelPainter {
+  display: flex;
+}
+
+#paletteArea {
+  border: black 1px solid;
+  background-color: rgba(0,0,255,0.3);
+}
+
+#palette {
+  margin: 20px;
+}
+
+.defaults {
+  border: black 1px solid;
+  height: 25px;
+  width: 75px;
+  margin-top: 10px;
+  border-radius: 15%;
+  text-align: center;
+}
+
+#blacks {
+  display: flex;
+  align-items: center;
+}
+
+#blackImg {
+  height: 25px;
+  width: 25px;
+  margin-right: 5px;
+}
+
+#erasers {
+  display: flex;
+  align-items: center;
+  background-color: white;
+}
+
+#eraserImg {
+  height: 25px;
+  width: 25px;
+  margin-right: 5px;
+}
+
+#fills {
+  display: flex;
+  align-items: center;
+  background-color: white;
+}
+
+#fillImg {
+  height: 25px;
+  width: 25px;
+  margin-right: 5px;
+}
+
+#clearAlls {
+  display: flex;
+  align-items: center;
+  background-color: white;
+}
+
+#clearAllImg {
+  height: 25px;
+  width: 25px;
+  margin-right: 5px;
+}
+
+#canvas {
+  margin: 20px;
+}
+
+.paletteGridRow {
+  display: flex;
+}
+
+.paletteGridCell {
+  border: black 1px solid;
+  height: 25px;
+  width: 25px;
+  margin: 2px;
+  margin-bottom: 4px;
+  padding: 0px;
+  border-radius: 100%;
+}
+
+.canvasGridRow {
+  display: flex;
+}
+
+.canvasGridCell {
+  border: black 1px dotted;
+  height: 15px;
+  width: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+  .canvasGridCell {
+    border: black 0.5px dotted;
+    height: 10px;
+    width: 10px;
+  }
+
+  #pixelPainter {
+    display: flex;
+    flex-wrap: wrap-reverse;
+  }
+
+  #paletteArea {
+    border: black 1px solid;
+    background-color: rgba(0,0,255,0.3);
+    transform: rotate(-90deg);
+    transform-origin: 0 100%;
+    position: absolute;
+    height: -100px;
+    width: 145px;
+    left: 340px;
+    bottom: 200;
+  }
+  
+  #palette {
+    margin: 20px;
+  }
+
+  #defaultArea {
+    display: flex;
+    flex-direction: row-reverse;
+    height: 100px;
+    align-items: center;
+    width: 75px;
+  }
+  
+  .defaults {
+    border: black 1px solid;
+    height: 25px;
+    width: 75px;
+    margin-top: 10px;
+    border-radius: 15%;
+    text-align: center;
+    transform: rotate(+90deg);
+  }
+  
+  #blacks {
+    display: flex;
+    align-items: center;
+    margin-right: -60px;
+  }
+  
+  #blackImg {
+    height: 25px;
+    width: 25px;
+    margin-right: 5px;
+  }
+  
+  #erasers {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    margin-right: -40px;
+  }
+  
+  #eraserImg {
+    height: 25px;
+    width: 25px;
+    margin-right: 5px;
+  }
+  
+  #fills {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    margin-right: -30px;
+  }
+  
+  #fillImg {
+    height: 25px;
+    width: 25px;
+    margin-right: 5px;
+  }
+  
+  #clearAlls {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    margin-right: -30px;
+  }
+  
+  #clearAllImg {
+    height: 25px;
+    width: 25px;
+    margin-right: 5px;
+  }
+
+}
+
