@@ -27,7 +27,9 @@ function colorStyle(gridType) {
   return rgbObj;
 }
 
-function makeCanvas2(height, width = height, gridType) {
+function makeGrid(height, width = height, gridType) {
+  let appendTo;
+  let borderType;
   if (gridType === "canvas") {
     appendTo = pixelPainter;
     borderType = " 1px dotted";
@@ -45,6 +47,7 @@ function makeCanvas2(height, width = height, gridType) {
     newCol.id = "row" + i;
     newCol.className = gridType + "GridRow";
     newElem.appendChild(newCol);
+
     for (let j = 1; j <= width; j++) {
       let newCell = document.createElement("div");
       newCell.id = gridType + "-row" + i + "-col" + j;
@@ -65,7 +68,7 @@ paletteBox.id = "paletteArea";
 pixelPainter.appendChild(paletteBox);
 
 function makeColorPalette(height, width = height) {
-  makeCanvas2(height, width, "palette");
+  makeGrid(height, width, "palette");
 }
 
 function addDefaults() {
@@ -140,7 +143,7 @@ function addDefaults() {
 
 // invoke to create palette, settings, and canvas
 makeColorPalette(5, 3);
-makeCanvas2(25, 25, "canvas");
+makeGrid(25, 25, "canvas");
 addDefaults();
 
 let paletteClass = document.getElementsByClassName("paletteGridCell");
